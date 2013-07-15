@@ -1,0 +1,66 @@
+LPTHW EX 22
+
+What have you learned about so far?
+
+concepts:
+* variables: symbols that have values. the values can be strings, integers, floats or other data types. the values can be changed. when you want to use that value in an equation, or
+as a parameter for a function to operate on, you can give the variable instead of posting the literal value.
+* formatters: you can include a string or integer or the real representation of a variable and include it in a string by adding formatters to a string literal to show
+where they should go.
+* concepts from ex6: ex6concept01: You don't have to print a string with formatters right away.  You can store it.  You can also store the result of that string with parameters convoluted into it using the '%' operator. example: b = "This string, %s, contains a formatter." and c = "This string, %s, contains a formatter." % 'which i have called Thaddeus',
+both work and store, respectively "This string, %s, contains a formatter." and "This string, which i have called Thaddeus, contains a formatter."
+ex6concepts02: if you want to give a list of variables and values to the % operator you can give it in a list literal format (element1,element2,...)
+ex6concepts03: %r is a formatter that shows that you want to include the real representation of a value.  that means that for strings, for example, the string with quotes, just as its used in code would be stored/displayed.
+ex6concepts04: The '+' operator can be used to concatenate strings.
+ex7concepts01: You can use '*' to multiplicatively concatenate strings.  For example "krantz" * 3 gives "krantzkrantzkrantz"
+ex7concepts02: If you put a comma at the end of an expression that print accepts then print will not automatically add a carriage return before the next print statement
+ex12concepts01: raw_input() can take an optional string argument. that argument is a string that can be used as a prompt. it saves having to have an extra print statement to create a prompt.
+ex13concepts01: unpacking: you can assign a variable containing a list value to a comma separated list of variables. the list contained in the assigned-from variable will be unpacked into entries which will be assigned one by one to the members of the comma separated list of variables.
+ex13concepts02: args: you can pass space delimited arguments into a python script. make sure when you unpack argv that you get the number of args that you actually expect
+ex14: raw_input can take an optional prompt argument. I am so FUCKING fascinated.
+ex19: you can combine variables with literals and other things in expressions. you can use an expression as an argument wherever you would put a single variable or literal value
+
+list of words and symbols and their definitions:
+
+words
+print: prints a variety objects, implicit or explicit casts to strings are allowed
+raw_input(): this is a function that pauses the execution of the program so that it can accept some string from input terminated by a carriage return. it returns that string without the carriage return.
+from <modulegroup> import <module>: two keywords that get used together to import a module from a modulegroup (my terms). this gives you the ability to access and use a function from
+ the module that you've imported.
+member functions of a file object:
+  open(filename): takes a string argument "filename" and outputs an object that, later on, can be used to do things with a file. the object models a file handle.
+  close: closes the filehandle
+  truncate: empties a file but doesn't delete the file itself. it just makes it zero-sized.
+  read: reads the contents of the file, even multiple lines
+  readline: reads just one line from the file
+  write(stuff): writes things to the file, things in "stuff" 
+def: allows us to define functions. We can use functions to run a block of code wherever we want and put different arguments in for different calls.
+seek: seek is another member function of file handles that lets you move the file pointer position to a different place in the file. position 0 is the beginning of the file.
+return: this keyword lets you return a value from a function. if you return something then you can use that function in an expression or as an argument for another function. for example, if you have a function that returns a number, if you call that function as an argument of the print function then it'll print the number that that function returns.
+
+symbols:
+": used to delimit a string, a series of characters suitable for being interpreted by a terminal
+': also used to delimit a string.  if you enclose a string in single quotes, double quotes
+   won't have to be escaped.  if enclosed in double quotes, single quotes won't have to be used
+#: used to add a comment to code or disable some code
++: adds integers and floats, concatenates strings, this power means you've got to be careful when mixing strings, numbers, and strings that contain numbers that are not supposed to be used in formulas but merely interpreted by a terminal
+-: subtracts ints and floats from each other
+/: divides ints and floats.  if you divide two ints it'll give you an int result by flooring the real result
+*: multiplies ints and floats.  you can also "multiply" strings by specifying more than one concatenation.
+%: gives integer remainder of a division
+<: gives a boolean result when comparing the size of ints or floats.  if a < b then a < b will evaluate to TRUE, otherwise it'll evaluate to FALSE
+>: gives boolean result when comparing the size of ints or floats.  if a > b then a > b will evaulate to TRUE, otherwise it'll evaluate to FALSE
+<=: gives a boolean result when comparing the size of ints or floats.  if a > b then a <= b will be FALSE.  If not, it'll evaluate TRUE.
+>=: gives a boolean result when comparing size of ints or floats.  if a < b, then a >= b will evaluate FALSE.  If not, it'll evaluate TRUE.
+=: assigns, or stores, a value in a variable
+==: tests if one value is equal to another value depending on the peculiar rules that govern equality between the different types involved. there may be implicit casting in some cases
+%: modulus: a % b will give the remainder that results from the integer version of a / b .  % can also be used to delimit a formatter in a string literal.  % can also be used as an operator between a string literal containing formatters and a value, or variable, or list of variables, that you want included and formatted at the point where the corresponding formatter is included.
+%r: this formatter prints the real representation of a variable's value
+\: backslash is used to specify special characters. \n is carriage return for example, \r is line feed, \t is tab, \v is vertical tab, to specify a \ by itself you have to double it
+\\. \' and \" can be used to specify single quotes and double quotes respectively in string literals delimited by single quotes and double quotes.  that can be useful if you're working on a string that has both single quotes and double quotes in it to encode. in that case no matter what you use for the delimiter you need to escape at least one kind with single quote or double quote.
+""": allows you to write multiline string literals. ordinarily a carriage return at the end of a string literal would cause a failure because the parser would be expecting the end delimiter, a single quote or a double quote.
+,: a comma between one printed string or object and another causes concatentation without a carriage return
+.: . can be used to specify a member of an object.
+(). can be used at the end of a function name when you are making a function call that doesn't need arguments. arguably without these brackets the interpreter would have no way of knowing you're referring to a function and throw you a syntax error. it's a good this convention exists!
+*: can be used to pass in an array (presumably by reference instead of by value)
+:: used to end the function definition started by def
