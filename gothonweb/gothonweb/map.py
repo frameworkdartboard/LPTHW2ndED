@@ -102,9 +102,9 @@ into jam jelly.
 """
 )
 
-escape_pod.add_aths({
+escape_pod.add_paths({
     '2': the_end_winner,
-    '*': the_end_oser
+    '*': the_end_loser
 })
 
 generic_death = Room("death", "You died.")
@@ -121,7 +121,7 @@ laser_weapon_armory.add_paths({
 
 central_corridor.add_paths({
     'shoot!': generic_death,
-    'dodge!': gneric_death,
+    'dodge!': generic_death,
     'tell a joke': laser_weapon_armory
 })
 
