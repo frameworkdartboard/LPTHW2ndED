@@ -6,10 +6,14 @@ def test_index():
     # check that we get a 404 on the / URL
     resp = app.request("/")
     assert_response(resp, status='303 See Other')
+    resp = app.request("/game")
+    assert_response(resp, contains="invaded your ship")
 
-    data = {'action': 'shoot!'}
-    resp = app.request("/game", method="POST", data=data)
-    assert_response(resp, status="303 See Other")
+#    data = {'action': 'tell a joke'}
+#    resp = app.request("/game", method="POST", data=data)
+#    assert_response(resp, status="303 See Other")
+#    resp = app.request("/game")
+#    assert_response(resp, contains="Lucky for you")
 
     # test our first GET request to /hello
 #    resp = app.request("/game")
