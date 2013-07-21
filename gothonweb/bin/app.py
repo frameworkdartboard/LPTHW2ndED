@@ -12,7 +12,7 @@ app = web.application(urls, globals())
 if web.config.get('_session') is None:
     store = web.session.DiskStore('sessions')
     session = web.session.Session(app, store,
-                                  initializer={'room': None})
+                                  initializer={'room': None, 'syntaxerror': False})
     web.config._session = session
 else:
     session = web.config._session
@@ -24,6 +24,7 @@ class Index(object):
     def GET(self):
         # this is used to "setup" the session with starting values
         session.room = map.START
+        session.syntaxerror = False
         web.seeother("/game")
 
 
@@ -31,7 +32,10 @@ class GameEngine(object):
 
     def GET(self):
         if session.room:
-            return render.show_room(room=session.room)
+            if session.syntaxerror:
+                 return render.show_room_w_error(room=session.room)
+            else:
+                 return render.show_room(room=session.room)
         else:
             # why is there here? do you need it?
             return render.you_died()
@@ -39,9 +43,21 @@ class GameEngine(object):
     def POST(self):
         form = web.input(action=None)
 
-        # there is a bug here, can you fix it?
-        if session.room and form.action:
-            session.room = session.room.go(form.action)
+        #if we somehow lost track of the room i really don't know what else to do.
+        if not session.room:
+            raise Exception("session.room is null!")
+
+        temproom = session.room.go(form.action)
+        if temproom:
+            session.room = temproom
+            session.syntaxerror = False
+        else:
+            temproom = session.room.go('*')
+            if temproom:
+                session.room = temproom
+                session.syntaxerror = False
+            else:
+                session.syntaxerror = True
 
         web.seeother("/game")
 
