@@ -8,7 +8,9 @@ def test_the_whole_gothon_enchilada():
     b = app.browser()
     b.open("/")
     # central_corridor
-    assert "The Gothons of Planet Percal #25 have invaded your ship and destroyed"
+    assert_in("The Gothons of Planet Percal #25 have invaded your ship and destroyed",b.data)
+    # test that you're not at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
     # negative test
     assert "parpy" not in b.data
 
@@ -17,6 +19,21 @@ def test_the_whole_gothon_enchilada():
     b.submit()
     # corridor_shoot_death 
     assert "Quick on the draw you yank out your blaster and fire it at the Gothon." in b.data
+    # test that you're not at an error page
+    assert "I don\'t understand.  Please try another command."    
+    # negative test
+    assert "parpy" not in b.data
+
+    b.open("/")
+    b.select_form("myform")
+    b["action"] = "dodge!"
+    b.submit()
+    # corridor_dodge_death 
+    assert "Like a world class boxer you dodge, weave, slip and slide right" in b.data
+    # test that you're not at an error page
+    assert "I don\'t understand.  Please try another command." not in b.data
+    # negative test
+    assert "parpy" not in b.data
 
     b.open("/")
     b.select_form("myform")
@@ -24,24 +41,30 @@ def test_the_whole_gothon_enchilada():
     b.submit()
     # laser_weapon_armory
     assert "Lucky for you they made you learn Gothon insults in the academy." in b.data
+    # test that you're not at an error page
+    assert "I don\'t understand.  Please try another command." not in b.data
+    # negative test
+    assert "parpy" not in b.data
 
-#  
-#    resp = app.request("/")
-#    assert_response(resp, status='303 See Other')
-#   
-#    data = {'action': 'tell a joke'}
-#    resp = app.request("/game", method="POST", data=data)
-#    assert_response(resp, contains="Lucky for you")
-#
-    # test our first GET request to /hello
-#    resp = app.request("/game")
-#    assert_response(resp)
+    b.open("/")
+    b.select_form("myform")
+    b["action"] = "asdfasdfaSYNTAXERROR"
+    b.submit()
+    # central_corridor w errmsg
+    assert "The Gothons of Planet Percal #25 have invaded your ship and destroyed" in b.data
+    # test that you ARE at an error page
+    assert_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert "parpy" not in b.data
 
-    # test if 
-#    resp = app.request("/hello", method="POST")
-#    assert_response(resp, contains="Nobody")
-#
-#    # test that we get expected values
-#    data = {'name': 'Zed', 'greet': 'Hola'}
-#    resp = app.request("/hello", method="POST", data=data)
-#    assert_response(resp, contains="Zed")
+#    b.select_form("myform")
+#    b["action"] = "tell a joke"
+#    b.submit()
+#    b.select_form("myform")
+#    b["action"] = "01xx"
+#    # armory_guess_death
+#    assert "The lock buzzes one last time and then you hear a sickening" in b.data
+#    # test that you're not at an error page
+#    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+#    # negative test
+#    assert "parpy" not in b.data
