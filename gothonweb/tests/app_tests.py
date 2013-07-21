@@ -12,59 +12,158 @@ def test_the_whole_gothon_enchilada():
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
     # negative test
-    assert "parpy" not in b.data
+    assert_not_in("parpy",b.data)
 
     b.select_form("myform")
     b["action"] = "shoot!"
     b.submit()
     # corridor_shoot_death 
-    assert "Quick on the draw you yank out your blaster and fire it at the Gothon." in b.data
+    assert_in("Quick on the draw you yank out your blaster and fire it at the Gothon.",b.data)
     # test that you're not at an error page
-    assert "I don\'t understand.  Please try another command."    
+    assert_not_in("I don\'t understand.  Please try another command.",b.data) 
     # negative test
-    assert "parpy" not in b.data
+    assert_not_in("parpy",b.data)
 
     b.open("/")
     b.select_form("myform")
     b["action"] = "dodge!"
     b.submit()
     # corridor_dodge_death 
-    assert "Like a world class boxer you dodge, weave, slip and slide right" in b.data
+    assert_in("Like a world class boxer you dodge, weave, slip and slide right",b.data)
     # test that you're not at an error page
-    assert "I don\'t understand.  Please try another command." not in b.data
+    assert_not_in("I don\'t understand.  Please try another command.",b.data)
     # negative test
-    assert "parpy" not in b.data
-
-    b.open("/")
-    b.select_form("myform")
-    b["action"] = "tell a joke"
-    b.submit()
-    # laser_weapon_armory
-    assert "Lucky for you they made you learn Gothon insults in the academy." in b.data
-    # test that you're not at an error page
-    assert "I don\'t understand.  Please try another command." not in b.data
-    # negative test
-    assert "parpy" not in b.data
+    assert_not_in("parpy",b.data)
 
     b.open("/")
     b.select_form("myform")
     b["action"] = "asdfasdfaSYNTAXERROR"
     b.submit()
     # central_corridor w errmsg
-    assert "The Gothons of Planet Percal #25 have invaded your ship and destroyed" in b.data
+    assert_in("The Gothons of Planet Percal #25 have invaded your ship and destroyed", b.data)
     # test that you ARE at an error page
     assert_in("I don\'t understand.  Please try another command.", b.data)
     # negative test
-    assert "parpy" not in b.data
+    assert_not_in("parpy",b.data)
 
-#    b.select_form("myform")
-#    b["action"] = "tell a joke"
-#    b.submit()
-#    b.select_form("myform")
-#    b["action"] = "01xx"
-#    # armory_guess_death
-#    assert "The lock buzzes one last time and then you hear a sickening" in b.data
-#    # test that you're not at an error page
-#    assert_not_in("I don\'t understand.  Please try another command.", b.data)
-#    # negative test
-#    assert "parpy" not in b.data
+    b.open("/")
+    b.select_form("myform")
+    b["action"] = "tell a joke"
+    b.submit()
+    # laser_weapon_armory
+    assert_in("Lucky for you they made you learn Gothon insults in the academy.",b.data)
+    # test that you're not at an error page
+    assert_not_in("I don\'t understand.  Please try another command.",b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+
+    b.select_form("myform")
+    b["action"] = "01xx"
+    b.submit()
+    # armory_guess_death
+    assert_in("The lock buzzes one last time and then you hear a sickening", b.data)
+    # test that you're not at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+
+    b.open("/")
+    b.select_form("myform")
+    b["action"] = "tell a joke"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "0132"
+    b.submit()
+    # the_bridge
+    assert_in("The container clicks open and the seal breaks, letting gas out.", b.data)
+    # test that you're not at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+
+    b.select_form("myform")
+    b["action"] = "throw the bomb"
+    b.submit()
+    # bridge_throw_death
+    assert_in("In a panic you throw the bomb at the group of Gothons", b.data)
+    # test that you're not at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+
+    b.open("/")
+    b.select_form("myform")
+    b["action"] = "tell a joke"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "0132"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "ERRORERRORsadf"
+    b.submit()
+    # the_bridge w error
+    assert_in("The container clicks open and the seal breaks, letting gas out.", b.data)
+    # test that you ARE at an error page
+    assert_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+
+    b.select_form("myform")
+    b["action"] = "slowly place the bomb"
+    b.submit()
+    # escape_pod
+    assert_in("You point your blaster at the bomb under your arm", b.data)
+    # test that you aren't at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+
+    b.select_form("myform")
+    b["action"] = "3"
+    b.submit()
+    # the_end_loser
+    assert_in("You jump into a random pod and hit the eject button.", b.data)
+    # test that you aren't at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+    
+    b.open("/")
+    b.select_form("myform")
+    b["action"] = "tell a joke"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "0132"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "slowly place the bomb"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "asdf"
+    b.submit()
+    # the_end_loser w not even a valid pod #
+    assert_in("You jump into a random pod and hit the eject button.", b.data)
+    # test that you aren't at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
+
+    b.open("/")
+    b.select_form("myform")
+    b["action"] = "tell a joke"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "0132"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "slowly place the bomb"
+    b.submit()
+    b.select_form("myform")
+    b["action"] = "2"
+    b.submit()
+    # the_end_winner
+    assert_in("You jump into pod 2 and hit the eject button.", b.data)
+    # test that you aren't at an error page
+    assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # negative test
+    assert_not_in("parpy",b.data)
