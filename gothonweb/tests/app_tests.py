@@ -11,6 +11,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("The Gothons of Planet Percal #25 have invaded your ship and destroyed",b.data)
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you're not being asked to play again
+    assert_not_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -21,6 +23,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("Quick on the draw you yank out your blaster and fire it at the Gothon.",b.data)
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.",b.data) 
+    # test that you ARE being asked to play again (since you died)
+    assert_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -32,6 +36,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("Like a world class boxer you dodge, weave, slip and slide right",b.data)
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.",b.data)
+    # test that you ARE being asked to play again (since you died)
+    assert_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -43,6 +49,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("The Gothons of Planet Percal #25 have invaded your ship and destroyed", b.data)
     # test that you ARE at an error page
     assert_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you're not being asked to play again
+    assert_not_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -54,6 +62,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("Lucky for you they made you learn Gothon insults in the academy.",b.data)
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.",b.data)
+    # test that you're not being asked to play again
+    assert_not_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -64,6 +74,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("The lock buzzes one last time and then you hear a sickening", b.data)
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you ARE being asked to play again (since you died)
+    assert_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -78,6 +90,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("The container clicks open and the seal breaks, letting gas out.", b.data)
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you're not being asked to play again
+    assert_not_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -88,6 +102,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("In a panic you throw the bomb at the group of Gothons", b.data)
     # test that you're not at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you ARE being asked to play again (since you died)
+    assert_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -105,6 +121,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("The container clicks open and the seal breaks, letting gas out.", b.data)
     # test that you ARE at an error page
     assert_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you're not being asked to play again
+    assert_not_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -115,6 +133,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("You point your blaster at the bomb under your arm", b.data)
     # test that you aren't at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you're not being asked to play again
+    assert_not_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -125,6 +145,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("You jump into a random pod and hit the eject button.", b.data)
     # test that you aren't at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you ARE being asked to play again (since you died)
+    assert_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
     
@@ -145,6 +167,8 @@ def test_the_whole_gothon_enchilada():
     assert_in("You jump into a random pod and hit the eject button.", b.data)
     # test that you aren't at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you ARE being asked to play again (since you died)
+    assert_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
 
@@ -165,5 +189,7 @@ def test_the_whole_gothon_enchilada():
     assert_in("You jump into pod 2 and hit the eject button.", b.data)
     # test that you aren't at an error page
     assert_not_in("I don\'t understand.  Please try another command.", b.data)
+    # test that you ARE being asked to play again (since YOU WON!)
+    assert_in("Play Again?", b.data)
     # negative test
     assert_not_in("parpy",b.data)
