@@ -1,9 +1,11 @@
 import hashlib
+import sqlite3
 import web
 
 urls = (
   '/', 'Index',
-  '/', 'Results',
+  '/index', 'Index',
+  '/game', 'Game'
 )
 
 app = web.application(urls, globals())
@@ -26,19 +28,21 @@ class Index(object):
         i = web.input()
         authdb = sqlite3.connect('users.db')
         pwdhash = hashlib.md5(i.password).hexdigest()
-        check = authdb.execute('select * from users where username=? and password=?', (i.username, pwdhash))
+        check = authdb.execute('select * from users where login=? and password=?', (i.login, pwdhash))
         if check:
             session.loggedin = True
-            session.username = i.username
-            raise web.seeother('/results')
-        else: return render.base("Those login details don't work.")
+            session.login = i.login
+            raise web.seeother('/game')
+        else: 
+            return render.usernotfound()
 
-class Results(object):
-    def GET(self):
+class Game(object):
+    def POST(self):
         # this is used to "setup" the session with starting values
-        session.room = map.START
+        # session.room = map.START
+        session.room = "thisisatest" # the full session test will set this too
         session.syntaxerror = False
-        web.seeother("/game")
+        return render.game()
 
 if __name__ == "__main__":
     app.run()
