@@ -29,15 +29,18 @@ class Index(object):
         authdb = sqlite3.connect('users.db')
         pwdhash = hashlib.md5(i.password).hexdigest()
         check = authdb.execute('select * from users where login=? and password=?', (i.login, pwdhash))
+        # force it to fail:
+        check = False
         if check:
             session.loggedin = True
             session.login = i.login
-            raise web.seeother('/game')
+            #raise web.seeother('/game')
+            return render.whatisauser()
         else: 
             return render.usernotfound()
 
 class Game(object):
-    def POST(self):
+    def GET(self):
         # this is used to "setup" the session with starting values
         # session.room = map.START
         session.room = "thisisatest" # the full session test will set this too
