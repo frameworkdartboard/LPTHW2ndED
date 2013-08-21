@@ -28,14 +28,20 @@ class Index(object):
         i = web.input()
         authdb = sqlite3.connect('users.db')
         pwdhash = hashlib.md5(i.password).hexdigest()
-        check = authdb.execute('select * from users where login=? and password=?', (i.login, pwdhash))
-        # force it to fail:
-        check = False
+        cursor = authdb.execute('select * from users where login=? and password=?', (i.login, pwdhash))
+
+        row = cursor.fetchone()
+        if row:
+            check = row[0]
+        else:
+            check = None
+
+        print "what's in a check?: '%r'" % check
         if check:
             session.loggedin = True
             session.login = i.login
             #raise web.seeother('/game')
-            return render.whatisauser()
+            return render.game()
         else: 
             return render.usernotfound()
 
