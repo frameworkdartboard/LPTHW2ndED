@@ -36,7 +36,7 @@ class Index(object):
         else:
             check = None
 
-        print "what's in a check?: '%r'" % check
+        # DEBUG = off print "check: '%r'" % check
         if check:
             session.loggedin = True
             session.login = i.login
