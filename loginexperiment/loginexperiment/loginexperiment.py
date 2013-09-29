@@ -27,7 +27,7 @@ class Index(object):
     def POST(self):
         i = web.input()
         authdb = sqlite3.connect('users.db')
-        pwdhash = hashlib.md5(i.password).hexdigest()
+        pwdhash = hashlib.md5(i.apassword).hexdigest()
         cursor = authdb.execute('select * from users where login=? and password=?', (i.login, pwdhash))
 
         row = cursor.fetchone()
