@@ -1,6 +1,7 @@
 import hashlib
 import sqlite3
 import web
+from websecurity import websecurity
 
 urls = (
   '/', 'Index',
@@ -26,18 +27,19 @@ class Index(object):
         return render.indextemplates()
     def POST(self):
         i = web.input()
-        authdb = sqlite3.connect('users.db')
-        pwdhash = hashlib.md5(i.apassword).hexdigest()
-        cursor = authdb.execute('select * from users where login=? and password=?', (i.login, pwdhash))
-
-        row = cursor.fetchone()
-        if row:
-            check = row[0]
-        else:
-            check = None
+        
+#        authdb = sqlite3.connect('users.db')
+#        pwdhash = hashlib.md5(i.apassword).hexdigest()
+#        cursor = authdb.execute('select * from users where login=? and password=?', (i.login, pwdhash))
+#
+#        row = cursor.fetchone()
+#        if row:
+#            check = row[0]
+#        else:
+#            check = None
 
         # DEBUG = off print "check: '%r'" % check
-        if check:
+        if websecurity.isUserValid(i.login, i.apassword):
             session.loggedin = True
             session.login = i.login
             #raise web.seeother('/game')
