@@ -1,5 +1,6 @@
 import web
 from gothonweb import map
+from websecurity import websecurity
 
 urls = (
   '/', 'Index',
@@ -29,6 +30,7 @@ class Index(object):
     def GET(self):
         # if a user is logged in and goes to "/" they should get sent back to the game
         # if a user is not logged in and goes to "/" they should get sent to the login page
+        print "session.loggedinuser == '%r'." % session.loggedinuser
         if session.loggedinuser == None:
             web.seeother("/login")
         else: 
@@ -36,18 +38,21 @@ class Index(object):
 
 class Login(object):
     def GET(self):
-        if session.loggedinuser != None:
-            web.seeother("/game")
+        return render.login()
+    def POST(self):
+        i = web.input()
 
-        
-        # this is used to "setup" the session with starting values
-        session.room = map.START
-        session.syntaxerror = False
-        web.seeother("/game")
+        if websecurity.isUserValid(i.login, i.apassword):
+            session.loggedinuser =  i.login
+            session.room = map.START
+            session.syntaxerror = False
+            web.seeother("/game")
+        else:
+            web.seeother("/usernotfound")
 
 class UserNotFound(object):
     def GET(self):
-        web.seeother("/game")
+        return render.usernotfound()
 
 class GameEngine(object):
 
