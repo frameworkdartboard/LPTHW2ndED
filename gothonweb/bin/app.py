@@ -63,7 +63,10 @@ class GameEngine(object):
             else:
                  return render.show_room(room=session.room)
         else:
-            # why is there here? do you need it?
+            print "is session.room ever None??? does this 'else' happen?"
+            session.room = map.START   
+# you're actually not even using this page. you're writing "you died" based on a decision in the html
+# should really keep all the decision making code in here.
             return render.you_died()
 
     def POST(self):
@@ -90,7 +93,7 @@ class GameEngine(object):
 
 class Logout(object):
     def GET(self):
-        web.seeother("/game")
+        web.seeother("/")
 
 if __name__ == "__main__":
     app.run()
