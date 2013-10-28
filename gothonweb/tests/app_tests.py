@@ -3,7 +3,7 @@ import web
 from bin.app import app
 from tests.tools import assert_response
 
-def test_the_whole_gothon_enchilada():
+def test_the_whole_gothon_scenario():
 
     b = app.browser()
     b.open("/")
