@@ -8,6 +8,7 @@ urls = (
   '/usernotfound', 'UserNotFound',
   '/game', 'GameEngine',
   '/logout', 'Logout',
+  '/reset', 'Reset',
 )
 
 app = web.application(urls, globals())
@@ -23,8 +24,8 @@ if web.config.get('_session') is None:
 else:
     session = web.config._session
 
-render = web.template.render('templates/', base="layout")
-
+renderwtemplate = web.template.render('templates/', base="layout")
+render = web.template.render('templates/')
 
 class Index(object):
     def GET(self):
@@ -57,17 +58,12 @@ class UserNotFound(object):
 class GameEngine(object):
 
     def GET(self):
-        if session.room:
-            if session.syntaxerror:
-                 return render.show_room_w_error(room=session.room)
-            else:
-                 return render.show_room(room=session.room)
-        else:
-            print "is session.room ever None??? does this 'else' happen?"
-            session.room = map.START   
-# you're actually not even using this page. you're writing "you died" based on a decision in the html
-# should really keep all the decision making code in here.
-            return render.you_died()
+        #if we somehow lost track of the room i really don't know what else to do.
+        #we must tell the world.  throw an exception!
+        if not session.room:
+            raise Exception("GameEngine.GET(): session.room is null!")
+
+        return self.cake_or_death(session.room)
 
     def POST(self):
         form = web.input(action=None)
@@ -75,25 +71,36 @@ class GameEngine(object):
         #if we somehow lost track of the room i really don't know what else to do.
         #we must tell the world.  throw an exception!
         if not session.room:
-            raise Exception("session.room is null!")
+            raise Exception("GameEngine.POST(): session.room is null!")
 
+        # if at least one path for a room is labelled "*" then there can't be a syntax error for it.
         temproom = session.room.go(form.action)
         if temproom:
             session.room = temproom
-            session.syntaxerror = False
+            return self.cake_or_death(session.room)
         else:
             temproom = session.room.go('*')
             if temproom:
                 session.room = temproom
-                session.syntaxerror = False
+                return self.cake_or_death(session.room)
             else:
-                session.syntaxerror = True
+                return renderwtemplate.show_room_w_error(room=session.room)
 
-        web.seeother("/game")
+    def cake_or_death(self,room):
+        if room.name == "You died.":
+            return renderwtemplate.show_room_w_death(room=room)
+        else:
+            return renderwtemplate.show_room(room=room)
 
 class Logout(object):
     def GET(self):
-        web.seeother("/")
+        session.loggedinuser = None
+        return render.logout()
+
+class Reset(object):
+    def GET(self):
+        session.room = map.START
+        web.seeother("/game")
 
 if __name__ == "__main__":
     app.run()
